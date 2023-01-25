@@ -1,0 +1,241 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ro.ucv.inf.ead</groupId>
+	<artifactId>ropharma</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
+
+	<packaging>war</packaging>
+
+	<name>ROPharma</name>
+	<description>ROPharma - Spring MVC Web application (Bootstrap HTML Interface Version)</description>
+
+	<properties>
+		<!-- Generic properties -->
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Spring -->
+		<spring-framework.version>5.3.24</spring-framework.version>
+		<spring-data-jpa.version>2.7.6</spring-data-jpa.version>
+		<spring-security.version>5.7.5</spring-security.version>
+
+		<!-- Persistence -->
+		<hibernate.version>5.6.14.Final</hibernate.version>
+		<jta.version>1.1</jta.version>
+		<mysql-connector-java.version>8.0.30</mysql-connector-java.version>
+
+		<!-- Logging -->
+		<slf4j.version>1.7.25</slf4j.version>
+		<slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
+
+		<!-- Servlet -->
+		<servletapi.version>3.1.0</servletapi.version>
+		<jstl.version>1.2</jstl.version>
+		<jsp-api.version>2.1</jsp-api.version>
+
+		<!-- Hibernate's Bean Validation - Needed for form validation -->
+		<hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
+
+		<!-- Maven Plugin versions -->
+		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+		<jetty-maven-plugin.version>9.4.35.v20201120</jetty-maven-plugin.version>
+
+		<jetty.http.port>8000</jetty.http.port>
+	</properties>
+
+	<dependencies>
+		<!-- For compile only, your container should have this -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servletapi.version}</version>
+			<scope>provided</scope>
+		</dependency>
+			
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JSTL Tags library API -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- JSTL Implementation -->		
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>jstl-impl</artifactId>
+			<version>${jstl.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet.jsp</groupId>
+					<artifactId>jsp-api</artifactId>					
+				</exclusion>
+				<exclusion>
+					<groupId>javax.servlet.jsp.jstl</groupId>
+					<artifactId>jstl-api</artifactId>					
+				</exclusion>
+				<exclusion>
+			        <groupId>org.slf4j</groupId>
+			        <artifactId>slf4j-log4j12</artifactId>
+			    </exclusion>
+			</exclusions>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- Logging with SLF4J & LogBack -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-log4j12.version}</version>
+		</dependency>
+
+		<!-- Spring Framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+
+		<!-- Spring MVC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring-framework.version}</version>			
+		</dependency>
+		
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		
+		<!-- JPA Spring Framework Dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>	
+			<!-- Spring Data JPA -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring-data-jpa.version}</version>			
+		</dependency>	
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>${jta.version}</version>
+		</dependency>
+		
+		
+		<!-- JPA Implementation Dependencies -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+			<!-- 
+			 Remove the el-api.jar to avoid java.lang.LinkageError.
+			 This error occurs because Tomcat 7 already include el-api.jar 
+			--> 
+			<exclusions>
+				<exclusion>
+					<groupId>javax.el</groupId>
+					<artifactId>el-api</artifactId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+		
+		<!-- JDBC MySQL Connector -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector-java.version}</version>
+		</dependency>
+		
+
+		<!-- Bean Validation (JSR-303) reference implementation -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+		
+	</dependencies>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<!-- Set JDK Compiler Level -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+			</plugin>
+
+			<!-- Jetty Plugin to allow running application with mvn jetty:run -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty-maven-plugin.version}</version>
+				<configuration>
+					<webApp>
+						<contextPath>/${project.artifactId}</contextPath>
+					</webApp>
+					<scanIntervalSeconds>2</scanIntervalSeconds>
+					<httpConnector>
+						<!--host>localhost</host -->
+						<port>${jetty.http.port}</port>
+					</httpConnector>
+				</configuration>
+			</plugin>
+      
+		</plugins>
+	</build>
+
+</project>
